@@ -1,5 +1,10 @@
-import 'package:electronic_ptoject/Features/Products/Presentation/Pages/widgets/product_card.dart';
+import 'package:electronic_ptoject/Features/Products/Data/Datasource/product_data_sources.dart';
+import 'package:electronic_ptoject/Features/Products/Data/Repositories/product_repository.dart';
+import 'package:electronic_ptoject/Features/Products/Presentation/Bloc/product_bloc/product_bloc.dart';
+import 'package:electronic_ptoject/Features/Products/Presentation/Bloc/product_bloc/product_event.dart';
+import 'package:electronic_ptoject/Features/Products/Presentation/Pages/widgets/product_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../Data/models/product_model.dart';
 
@@ -26,28 +31,15 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.86, //نسبة عرض الخلية الى ارتفاعها
-            crossAxisSpacing: 10, //المسافة الجانبية بين البطاقات
-            mainAxisSpacing: 10, //المسافة الراسية بين البطاقات
-          ),
-          itemCount: products.length,
-          itemBuilder: (context, index) {
-            return ProductCard(
-              image: products[index].imageUrl,
-              title: products[index].title,
-              price: products[index].price,
-            );
-          },
-        ),
-      ),
+    return BlocProvider(
+      create: (context) {
+        final dataSources = ProductDataSources();
+        final repository = ProductRepository(dataSources);
+        final bloc = ProductBloc(repository);
+        bloc.add(FetchProductEvent());
+        return bloc;
+      },
+      child: Scaffold(appBar: AppBar(), body: ProductBody()),
     );
   }
 }

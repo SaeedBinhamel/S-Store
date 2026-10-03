@@ -1,9 +1,7 @@
 import 'package:electronic_ptoject/Core/Theme/app_color.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../Core/utils/size_config.dart';
 import '../../../../../Core/utils/widgets/custom_button.dart';
-import '../../../../../Core/utils/widgets/space_widget.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -39,25 +37,40 @@ class ProductCard extends StatelessWidget {
         children: [
           AspectRatio(
             aspectRatio: 1.3,
-            child: Image.asset(image, fit: BoxFit.contain),
+            child: Image.network(image, fit: BoxFit.contain),
           ),
 
           Text(
             title,
-            style: TextStyle(color: AppColor.primaryText),
-            maxLines: 3,
+            style: TextStyle(
+              color: AppColor.primaryText,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+            maxLines: 1,
             overflow:
                 TextOverflow.ellipsis, //علشان لو زاد طول النص يحوله الى نقاط
           ),
           // VerticalSpace(2),
-          Text('$price', style: TextStyle(color: AppColor.primary)),
+          Text(
+            '$price \$',
+            style: TextStyle(
+              color: AppColor.primary,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Spacer(),
           SizedBox(
             height: 40,
             width: double.infinity,
-            child: CustomGeneralButton(
-              text: ' أضف للسلة +',
-              colorBG: AppColor.specialBackground,
-              colorText: AppColor.primary,
+            child: Padding(
+              padding: EdgeInsetsGeometry.fromLTRB(10, 0, 10, 5),
+              child: CustomGeneralButton(
+                text: ' أضف للسلة +',
+                colorBG: AppColor.specialBackground,
+                colorText: AppColor.primary,
+              ),
             ),
           ),
         ],
