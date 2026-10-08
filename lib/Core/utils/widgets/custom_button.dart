@@ -16,14 +16,14 @@ class CustomGeneralButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: Container(
         // height: 40,
         // width: 150,
         decoration: BoxDecoration(
           color: colorBG,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(50),
         ),
         child: Center(
           child: Text(

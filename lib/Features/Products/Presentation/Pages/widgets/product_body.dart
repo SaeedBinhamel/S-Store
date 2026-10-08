@@ -1,8 +1,12 @@
+import 'package:electronic_ptoject/Features/Cart/Presentation/Cubit/cart_cubit.dart';
 import 'package:electronic_ptoject/Features/Products/Presentation/Bloc/product_bloc/product_bloc.dart';
 import 'package:electronic_ptoject/Features/Products/Presentation/Bloc/product_bloc/product_state.dart';
 import 'package:electronic_ptoject/Features/Products/Presentation/Pages/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../Bloc/product_bloc/product_event.dart';
+import '../product_details_page.dart';
 
 class ProductBody extends StatelessWidget {
   const ProductBody({super.key});
@@ -28,14 +32,34 @@ class ProductBody extends StatelessWidget {
                 final product = state.products[index];
                 return ProductCard(
                   image: product.imageUrl,
+                  id: product.id,
                   title: product.title,
                   price: product.price,
+                  description: product.description,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ProductDetailsPage(product: product),
+                      ),
+                    );
+                  },
+                  btnOnTap: () {
+                    context.read<CartCubit>().addToCart(product);
+                    print('saeed');
+                  },
                 );
               },
             ),
           );
         } else if (state is ProductsError) {
-          return Text(state.message);
+          return InkWell(
+            child: Text(state.message),
+            onTap: () {
+              context.read<ProductBloc>().add(FetchProductEvent());
+            },
+          );
         } else {
           return SizedBox();
         }
