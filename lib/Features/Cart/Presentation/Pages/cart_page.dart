@@ -6,6 +6,7 @@ import 'package:electronic_ptoject/Features/Cart/Presentation/Pages/widgets/card
 import 'package:electronic_ptoject/Features/Products/Presentation/Pages/products_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -13,6 +14,15 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            context.pop();
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+        title: const Text('عودة'),
+      ),
       body: BlocBuilder<CartCubit, CartState>(
         builder: (context, state) {
           if (state is CartLoaded) {
@@ -62,12 +72,7 @@ class CartPage extends StatelessWidget {
                     Text("No products in you cart"),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProductsPage(),
-                          ),
-                        );
+                        context.go('/');
                       },
                       child: Text('add'),
                     ),

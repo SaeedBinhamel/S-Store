@@ -4,6 +4,7 @@ import 'package:electronic_ptoject/Features/Products/Presentation/Bloc/product_b
 import 'package:electronic_ptoject/Features/Products/Presentation/Pages/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../Bloc/product_bloc/product_event.dart';
 import '../product_details_page.dart';
@@ -37,17 +38,17 @@ class ProductBody extends StatelessWidget {
                   price: product.price,
                   description: product.description,
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            ProductDetailsPage(product: product),
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) =>
+                    //         ProductDetailsPage(productId: product.id),
+                    //   ),
+                    // );
+                    context.push('/products/${product.id}');
                   },
                   btnOnTap: () {
                     context.read<CartCubit>().addToCart(product);
-                    print('saeed');
                   },
                 );
               },

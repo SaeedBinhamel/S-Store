@@ -30,7 +30,7 @@ class CardItemInfo extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(12),
       decoration: ShapeDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         shape: RoundedRectangleBorder(
           side: BorderSide(width: 1, color: const Color(0xFFEAE6E1)),
           borderRadius: BorderRadius.circular(20),
@@ -63,7 +63,7 @@ class CardItemInfo extends StatelessWidget {
                 maxLines: 1,
                 textAlign: TextAlign.right,
                 style: TextStyle(
-                  color: const Color(0xFF1C1917),
+                  // color: const Color(0xFF1C1917),
                   fontSize: 15,
                   fontFamily: 'Cairo',
                   fontWeight: FontWeight.w700,

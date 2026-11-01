@@ -39,7 +39,8 @@ class ProductCard extends StatelessWidget {
               offset: Offset(0, 3),
             ),
           ],
-          color: AppColor.secondaryBackground,
+          color: Theme.of(context).colorScheme.surface,
+          // color: AppColor.secondaryBackground,
         ),
 
         child: Column(
@@ -54,7 +55,8 @@ class ProductCard extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: AppColor.primaryText,
+                // color: AppColor.primaryText,
+                // color: Theme.of(context).colorScheme.surface,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),

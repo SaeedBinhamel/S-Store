@@ -1,5 +1,6 @@
+import 'package:electronic_ptoject/Core/Routes/app_routes.dart';
+import 'package:electronic_ptoject/Core/Theme/Cubit/them_Cubit.dart';
 import 'package:electronic_ptoject/Core/Theme/app_theme.dart';
-import 'package:electronic_ptoject/Features/Products/Presentation/Pages/products_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,11 +33,20 @@ class MyApp extends StatelessWidget {
           },
         ),
         BlocProvider<CartCubit>(create: (context) => CartCubit()),
+        BlocProvider<ThemCubit>(create: (context) => ThemCubit()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        home: const ProductsPage(),
+      child: BlocBuilder<ThemCubit, ThemeMode>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            routerConfig: AppRoutes.appRouter,
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: state == ThemeMode.light
+                ? ThemeMode.light
+                : ThemeMode.dark,
+          );
+        },
       ),
     );
   }
