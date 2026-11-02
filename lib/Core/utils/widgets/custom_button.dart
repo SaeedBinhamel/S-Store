@@ -1,41 +1,38 @@
 import 'package:flutter/material.dart';
-import 'space_widget.dart';
 import '../size_config.dart';
 
 class CustomGeneralButton extends StatelessWidget {
   const CustomGeneralButton({
     super.key,
-    this.text,
+    required this.text,
     this.onTap,
     this.colorText,
     this.colorBG,
   });
-  final String? text;
+  final String text;
   final Color? colorText;
   final Color? colorBG;
-
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: Container(
-        height: 60,
-        width: SizeConfig.screenWidth,
+        // height: 40,
+        // width: 150,
         decoration: BoxDecoration(
           color: colorBG,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(50),
         ),
         child: Center(
           child: Text(
-            text!,
+            text,
             style: TextStyle(
               fontSize: 18,
               color: colorText,
               fontWeight: FontWeight.bold,
             ),
-            textAlign: TextAlign.left,
           ),
         ),
       ),
