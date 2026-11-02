@@ -25,7 +25,7 @@ class ProductDetailsPage extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          'Product Details',
+          'Product details',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
