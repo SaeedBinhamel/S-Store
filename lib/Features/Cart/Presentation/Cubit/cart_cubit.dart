@@ -3,11 +3,13 @@ import 'package:electronic_ptoject/Features/Cart/Presentation/Cubit/cart_state.d
 import 'package:electronic_ptoject/Features/Products/Data/models/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../Products/Domain/Entities/product.dart';
+
 class CartCubit extends Cubit<CartState> {
   CartCubit() : super(CartInitial());
   List<CartItem> items = [];
 
-  void addToCart(ProductModel product) {
+  void addToCart(Product product) {
     final index = items.indexWhere((item) {
       return item.product.id == product.id;
     });
@@ -21,7 +23,7 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  void increaseQuantity(ProductModel product) {
+  void increaseQuantity(Product product) {
     final index = items.indexWhere((item) {
       return item.product.id == product.id;
     });
@@ -39,7 +41,7 @@ class CartCubit extends Cubit<CartState> {
     emit(CartLoaded(List.from(items)));
   }
 
-  void removeFromCart(ProductModel product) {
+  void removeFromCart(Product product) {
     final index = items.indexWhere((item) {
       return item.product.id == product.id;
     });
@@ -50,7 +52,7 @@ class CartCubit extends Cubit<CartState> {
     emit(CartLoaded(List.from(items)));
   }
 
-  void decreaseQuantity(ProductModel product) {
+  void decreaseQuantity(Product product) {
     final index = items.indexWhere((item) {
       return item.product.id == product.id;
     });

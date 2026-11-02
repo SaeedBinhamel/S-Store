@@ -1,13 +1,13 @@
 import 'package:electronic_ptoject/Features/Cart/Presentation/Cubit/cart_cubit.dart';
-import 'package:electronic_ptoject/Features/Products/Presentation/Bloc/product_bloc/product_bloc.dart';
 import 'package:electronic_ptoject/Features/Products/Presentation/Bloc/product_bloc/product_state.dart';
-import 'package:electronic_ptoject/Features/Products/Presentation/Pages/widgets/product_card.dart';
+import 'package:electronic_ptoject/Features/Products/Presentation/Bloc/product_bloc/product_bloc.dart';
+import 'package:electronic_ptoject/Features/Products/Presentation/pages/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../Core/Di/service_locator.dart';
 import '../../Bloc/product_bloc/product_event.dart';
-import '../product_details_page.dart';
 
 class ProductBody extends StatelessWidget {
   const ProductBody({super.key});
@@ -48,7 +48,8 @@ class ProductBody extends StatelessWidget {
                     context.push('/products/${product.id}');
                   },
                   btnOnTap: () {
-                    context.read<CartCubit>().addToCart(product);
+                    getIt<CartCubit>().addToCart(product);
+                    //context.read<CartCubit>().addToCart(product);
                   },
                 );
               },

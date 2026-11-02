@@ -1,8 +1,8 @@
-import 'package:electronic_ptoject/Features/Cart/Presentation/Pages/cart_page.dart';
-import 'package:electronic_ptoject/Features/Products/Presentation/Pages/products_page.dart';
+import 'package:electronic_ptoject/Features/Cart/Presentation/pages/cart_page.dart';
+import 'package:electronic_ptoject/Features/Products/Presentation/pages/products_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-import '../../Features/Products/Presentation/Pages/product_details_page.dart';
+import '../../Features/Products/Presentation/pages/product_details_page.dart';
 
 class AppRoutes {
   static final GoRouter appRouter = GoRouter(

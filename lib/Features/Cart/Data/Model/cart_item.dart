@@ -1,7 +1,7 @@
-import 'package:electronic_ptoject/Features/Products/Data/models/product_model.dart';
+import '../../../Products/Domain/Entities/product.dart';
 
 class CartItem {
-  final ProductModel product;
+  final Product product;
   final int quantity;
 
   const CartItem({required this.product, required this.quantity});

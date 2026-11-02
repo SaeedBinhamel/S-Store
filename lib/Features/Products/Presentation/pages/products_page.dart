@@ -1,5 +1,5 @@
 import 'package:electronic_ptoject/Core/Theme/Cubit/them_Cubit.dart';
-import 'package:electronic_ptoject/Features/Products/Presentation/Pages/widgets/product_body.dart';
+import 'package:electronic_ptoject/Features/Products/Presentation/pages/widgets/product_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
