@@ -1,4 +1,5 @@
 import 'package:electronic_ptoject/Features/Cart/Presentation/Cubit/cart_cubit.dart';
+import 'package:electronic_ptoject/Features/Products/Domain/UseCases/get_product_by_id.dart';
 import 'package:electronic_ptoject/Features/Products/Domain/UseCases/get_products.dart';
 import 'package:get_it/get_it.dart';
 import '../../Features/Products/Data/Datasource/product_data_sources.dart';
@@ -19,16 +20,21 @@ void setupDependencies() {
     () => ProductRepositoryImp(getIt<ProductDataSources>()),
   ); //ينشئ كائنًا واحدًا عند أول طلب، ثم يعيد استخدامه.
 
-  //Product Repository
+  //GetProducts Repository
   getIt.registerLazySingleton<GetProducts>(
     //ينشئ كائنًا واحدًا عند أول طلب، ثم يعيد استخدامه.
     () => GetProducts(getIt<ProductRepository>()),
+  );
+  // GetProductById
+  getIt.registerLazySingleton<GetProductById>(
+    //ينشئ كائنًا واحدًا عند أول طلب، ثم يعيد استخدامه.
+    () => GetProductById(getIt<ProductRepository>()),
   );
 
   //Product Bloc
   getIt.registerFactory<ProductBloc>(
     //	ينشئ كائنًا جديدًا في كل مرة تطلبه.
-    () => ProductBloc(getIt<GetProducts>()),
+    () => ProductBloc(getIt<GetProducts>(), getIt<GetProductById>()),
   );
 
   // Cart Cubit

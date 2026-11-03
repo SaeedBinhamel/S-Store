@@ -1,3 +1,4 @@
+import 'package:electronic_ptoject/Core/Di/service_locator.dart';
 import 'package:electronic_ptoject/Features/Cart/Presentation/Cubit/cart_cubit.dart';
 import 'package:electronic_ptoject/Features/Products/Presentation/Bloc/product_bloc/product_bloc.dart';
 import 'package:electronic_ptoject/Features/Products/Presentation/Bloc/product_bloc/product_state.dart';
@@ -15,154 +16,160 @@ class ProductDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            context.push('/cart');
-          },
-          icon: Icon(Icons.shopping_cart_rounded),
+    return BlocProvider(
+      create: (context) =>
+          getIt<ProductBloc>()..add(FetchProductByIdtEvent(id: productId)),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              context.push('/cart');
+            },
+            icon: Icon(Icons.shopping_cart_rounded),
+          ),
+          centerTitle: true,
+          title: Text(
+            'Product details',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
-        centerTitle: true,
-        title: Text(
-          'Product Details',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: BlocBuilder<ProductBloc, ProductState>(
-        builder: (context, state) {
-          if (state is ProductsLoading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state is ProductsSuccess) {
-            final product = state.products.firstWhere(
-              (product) => product.id == productId,
-            );
-            return Column(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Column(
-                      spacing: 5,
-                      children: [
-                        Container(
-                          margin: EdgeInsetsGeometry.all(5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: AppColor.specialBackground,
-                          ),
-                          child: Image.network(
-                            product.imageUrl,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
+        body: BlocBuilder<ProductBloc, ProductState>(
+          builder: (context, state) {
+            if (state is ProductsLoading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is OneProductSuccess) {
+              // final product = state.products.firstWhere(
+              //   (product) => product.id == productId,
+              // );
+              final product = state.product;
 
-                        Text(
-                          product.title,
-                          style: TextStyle(
-                            // color: AppColor.primaryText,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+              return Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Column(
+                        spacing: 5,
+                        children: [
+                          Container(
+                            margin: EdgeInsetsGeometry.all(5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: AppColor.specialBackground,
+                            ),
+                            child: Image.network(
+                              product.imageUrl,
+                              fit: BoxFit.contain,
+                            ),
                           ),
-                        ),
-                        Text(
-                          '${product.price}\$',
-                          style: TextStyle(
-                            color: AppColor.primary,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
 
-                        HorizontalLine(
-                          height: 1,
-                          horizontalPadding: 5,
-                          color: AppColor.primary,
-                        ),
-
-                        // Spacer(),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "Description:",
+                          Text(
+                            product.title,
                             style: TextStyle(
                               // color: AppColor.primaryText,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-
-                        Text(
-                          product.description,
-                          style: TextStyle(
-                            // color: AppColor.primaryText,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                          Text(
+                            '${product.price}\$',
+                            style: TextStyle(
+                              color: AppColor.primary,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
 
-                Row(
-                  spacing: 5,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.heart_broken,
-                            size: 40,
+                          HorizontalLine(
+                            height: 1,
+                            horizontalPadding: 5,
                             color: AppColor.primary,
                           ),
-                        ),
+
+                          // Spacer(),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Description:",
+                              style: TextStyle(
+                                // color: AppColor.primaryText,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+
+                          Text(
+                            product.description,
+                            style: TextStyle(
+                              // color: AppColor.primaryText,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
                     ),
-                    Flexible(
-                      flex: 3,
-                      child: SizedBox(
-                        height: 70,
-                        width: double.infinity,
-                        child: Padding(
-                          padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 0),
-                          child: CustomGeneralButton(
-                            onTap: () {
-                              context.read<CartCubit>().addToCart(product);
-                            },
-                            text: ' أضف للسلة +',
-                            colorBG: AppColor.specialBackground,
-                            colorText: AppColor.primary,
+                  ),
+                  SizedBox(height: 10),
+
+                  Row(
+                    spacing: 5,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.heart_broken,
+                              size: 40,
+                              color: AppColor.primary,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-              ],
-            );
-          } else if (state is ProductsError) {
-            return InkWell(
-              child: Text(state.message),
-              onTap: () {
-                context.read<ProductBloc>().add(FetchProductEvent());
-              },
-            );
-          }
-          return SizedBox();
-        },
+                      Flexible(
+                        flex: 3,
+                        child: SizedBox(
+                          height: 70,
+                          width: double.infinity,
+                          child: Padding(
+                            padding: EdgeInsetsGeometry.fromLTRB(0, 0, 0, 0),
+                            child: CustomGeneralButton(
+                              onTap: () {
+                                context.read<CartCubit>().addToCart(product);
+                              },
+                              text: ' أضف للسلة +',
+                              colorBG: AppColor.specialBackground,
+                              colorText: AppColor.primary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                ],
+              );
+            } else if (state is ProductsError) {
+              return InkWell(
+                child: Text(state.message),
+                onTap: () {
+                  context.read<ProductBloc>().add(FetchProductEvent());
+                },
+              );
+            }
+            return SizedBox();
+          },
+        ),
       ),
     );
   }
