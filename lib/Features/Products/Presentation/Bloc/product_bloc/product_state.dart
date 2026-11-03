@@ -12,6 +12,12 @@ class ProductsSuccess extends ProductState {
   ProductsSuccess(this.products);
 }
 
+class OneProductSuccess extends ProductState {
+  final Product product;
+
+  OneProductSuccess(this.product);
+}
+
 class ProductsError extends ProductState {
   final String message;
 
